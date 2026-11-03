@@ -1,0 +1,94 @@
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.template
+
+# Python
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+.venv-*/
+venv/
+env/
+ENV/
+.env/
+__pypackages__/
+*.egg-info/
+*.egg
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# Frontend / Node.js
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/install-state.gz
+.pnp.*
+.next/
+.nuxt/
+.output/
+.vite/
+.turbo/
+*.tsbuildinfo
+
+# Test and tooling output
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+.pytest_cache/
+.tox/
+.nox/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.pyre/
+.pytype/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+nosetests.xml
+junit.xml
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+*.swo
+
+# Runtime logs
+*.log
+*.log.*
+logs/
+
+# Local databases and database backups
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.dump
+*.pgdump
+*.pg_dump
+*.backup
+*.sql.gz
+
+# Local artifacts from previous versions
+data/contracts/
+:memory:*.ses
+
