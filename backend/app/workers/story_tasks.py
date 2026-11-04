@@ -24,7 +24,9 @@ async def generate_story_task(job_id: str, theme: str, session_id: str) -> None:
             job.status = "completed"
             job.completed_at = datetime.now(UTC)
             await db.commit()
+
         except Exception as exc:
+            
             await db.rollback()
             # Reload after rollback, which expires ORM attributes.
             job = await db.scalar(select(StoryJob).where(StoryJob.job_id == job_id))
