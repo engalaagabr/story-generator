@@ -92,3 +92,6 @@ logs/
 data/contracts/
 :memory:*.ses
 
+# Local architecture reference
+/backend/ARCHITECTURE.local.md
+
