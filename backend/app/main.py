@@ -1,11 +1,18 @@
 from fastapi import FastAPI
+
+from app.api.router import api_router
 from app.core.lifespan import lifespan
-from app.api.routers.health import router as health_router
-from app.api.routers.story import router as story_router
-from app.api.routers.job import router as job_router
 
-app = FastAPI(lifespan=lifespan)
 
-app.include_router(health_router)
-app.include_router(story_router)
-app.include_router(job_router)
+def create_app() -> FastAPI:
+    app = FastAPI(
+        lifespan=lifespan,
+        docs_url="/api/docs",
+        title="Story Generator API",
+        version="0.1.0",
+    )
+    app.include_router(api_router)
+    return app
+
+
+app = create_app()

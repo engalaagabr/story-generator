@@ -1,9 +1,18 @@
-from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.story import Story, StoryNode
 from app.schemas.story import CompleteStoryNodeResponse, CompleteStoryResponse
+from app.services.exceptions import InvalidStoryError, ResourceNotFoundError
+
+
+async def get_complete_story(
+    db: AsyncSession, story_id: int
+) -> CompleteStoryResponse:
+    story = await db.get(Story, story_id)
+    if story is None:
+        raise ResourceNotFoundError("Story not found")
+    return await build_complete_story_tree(db, story)
 
 
 async def build_complete_story_tree(
@@ -14,7 +23,7 @@ async def build_complete_story_tree(
     )
     nodes = result.all()
 
-    node_dict = {}
+    node_dict: dict[int, CompleteStoryNodeResponse] = {}
     for node in nodes:
         node_response = CompleteStoryNodeResponse(
             id=node.id,
@@ -27,7 +36,7 @@ async def build_complete_story_tree(
 
     root_node = next((node for node in nodes if node.is_root), None)
     if not root_node:
-        raise HTTPException(status_code=500, detail="Story root node not found")
+        raise InvalidStoryError("Story root node not found")
 
     return CompleteStoryResponse(
         id=story.id,

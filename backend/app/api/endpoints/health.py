@@ -1,16 +1,15 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_db
+from app.api.dependencies import DatabaseSession
 
-router = APIRouter()
+router = APIRouter(tags=["Health"])
 
-# smoke test endpoint
+
 @router.get("/health", summary="Check application and database health")
-async def health(db: AsyncSession = Depends(get_db)) -> JSONResponse:
+async def health(db: DatabaseSession) -> JSONResponse:
     """Report readiness without exposing connection details or exception text."""
     try:
         await db.execute(text("SELECT 1"))

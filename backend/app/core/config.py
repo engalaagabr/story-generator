@@ -1,5 +1,5 @@
-from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 class Settings(BaseSettings):
     """Application settings."""
@@ -11,5 +11,6 @@ class Settings(BaseSettings):
         extra="ignore",  # The shared .env also contains Docker Compose settings.
         hide_input_in_errors=True,
     )
+
 
 settings = Settings()
