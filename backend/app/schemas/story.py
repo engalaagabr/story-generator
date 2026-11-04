@@ -1,11 +1,11 @@
-from typing import List, Optional, Dict
 from datetime import datetime
-from pydantic import BaseModel
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class StoryOptionsSchema(BaseModel):
     text: str
-    node_id: Optional[int] = None
+    node_id: int | None = None
 
 
 class StoryNodeBase(BaseModel):
@@ -15,19 +15,17 @@ class StoryNodeBase(BaseModel):
 
 
 class CompleteStoryNodeResponse(StoryNodeBase):
-    id: int
-    options: List[StoryOptionsSchema] = []
+    model_config = ConfigDict(from_attributes=True)
 
-    class Config:
-        from_attributes = True
+    id: int
+    options: list[StoryOptionsSchema] = Field(default_factory=list)
 
 
 class StoryBase(BaseModel):
-    title: str
-    session_id: Optional[str] = None
+    model_config = ConfigDict(from_attributes=True)
 
-    class Config:
-        from_attributes = True
+    title: str
+    session_id: str | None = None
 
 
 class CreateStoryRequest(BaseModel):
@@ -38,7 +36,4 @@ class CompleteStoryResponse(StoryBase):
     id: int
     created_at: datetime
     root_node: CompleteStoryNodeResponse
-    all_nodes: Dict[int, CompleteStoryNodeResponse]
-
-    class Config:
-        from_attributes = True
+    all_nodes: dict[int, CompleteStoryNodeResponse]
