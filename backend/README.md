@@ -1,9 +1,9 @@
 # Story generator backend
 
-The backend is a feature-oriented modular monolith. The maintained
-[architecture guide](docs/architecture.md) explains every source file,
-dependency direction, transaction ownership, naming, and how to add features
-and model providers. Start there when reusing the structure in another project.
+For the complete Docker Compose stack, start with the [root README](../README.md).
+
+The backend groups story and job features into separate modules, with shared
+API, database and model-provider integrations.
 
 Run commands from the `backend` directory. Install dependencies with
 `python -m pip install -r requirements.txt`, copy `.env.example` to `.env`, and

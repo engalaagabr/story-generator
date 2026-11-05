@@ -1,5 +1,9 @@
 # Fable frontend
 
+For the complete Docker Compose stack, start with the [root README](../README.md).
+The container uses `Dockerfile` and `docker/nginx.conf`; `nginx.conf` below is
+an example for native hosting outside Docker.
+
 A React + TypeScript + Vite frontend for the FastAPI story generator. Includes
 prompt inspiration, English/Arabic generation, job polling, a branching story
 reader, backtracking, replay, sharing links, and a browser-local library.
