@@ -1,0 +1,47 @@
+{
+  "title": "The Lost Space Station",
+  "root_node_id": 10,
+  "nodes": [
+    {
+      "id": 10,
+      "content": "Your ship approaches a silent space station.",
+      "is_ending": false,
+      "is_winning_ending": false,
+      "options": [
+        {"text": "Dock at the station", "node_id": 20},
+        {"text": "Fly into the asteroid field", "node_id": 30}
+      ]
+    },
+    {
+      "id": 20,
+      "content": "Inside, you find a damaged escape shuttle.",
+      "is_ending": false,
+      "is_winning_ending": false,
+      "options": [
+        {"text": "Repair the shuttle", "node_id": 40},
+        {"text": "Launch immediately", "node_id": 50}
+      ]
+    },
+    {
+      "id": 30,
+      "content": "An asteroid destroys your ship.",
+      "is_ending": true,
+      "is_winning_ending": false,
+      "options": []
+    },
+    {
+      "id": 40,
+      "content": "You repair the shuttle and return home safely.",
+      "is_ending": true,
+      "is_winning_ending": true,
+      "options": []
+    },
+    {
+      "id": 50,
+      "content": "The damaged shuttle loses power in space.",
+      "is_ending": true,
+      "is_winning_ending": false,
+      "options": []
+    }
+  ]
+}
