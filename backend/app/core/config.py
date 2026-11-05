@@ -11,6 +11,7 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str
     STORY_PROVIDER: Literal["deepseek", "gemini"] = "deepseek"
+    STORY_GENERATION_MAX_ATTEMPTS: int = Field(default=2, ge=1, le=3)
     DEEPSEEK_API_KEY: SecretStr | None = None
     DEEPSEEK_BASE_URL: str = "https://api.deepseek.com"
     DEEPSEEK_MODEL: str = "deepseek/deepseek-v4.1-flash"

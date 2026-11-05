@@ -24,7 +24,9 @@ def create_app(
     generator = (
         generator
         if generator is not None
-        else StoryGenerationService(create_json_generator(config))
+        else StoryGenerationService(
+            create_json_generator(config), max_attempts=config.STORY_GENERATION_MAX_ATTEMPTS
+        )
     )
 
     @asynccontextmanager

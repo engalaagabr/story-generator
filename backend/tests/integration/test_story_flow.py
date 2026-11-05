@@ -152,6 +152,28 @@ class StoryFlowTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNotNone(job["completed_at"])
         await self.assert_no_stories()
 
+    async def test_corrected_generation_completes_original_job_and_saves_only_valid_story(self):
+        self.provider.generate_json.side_effect = ["{}", FIXTURE.read_text()]
+        with self.assertLogs("app.modules.stories.generation", level="WARNING"):
+            created = await self.create()
+        job = await self.get_job(created["job_id"])
+        self.assertEqual(job["status"], "completed")
+        self.assertIsNone(job["error"])
+        self.assertEqual(self.provider.generate_json.await_count, 2)
+        response = await self.client.get(f"/api/story/{job['story_id']}/complete")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json()["all_nodes"]), 5)
+        async with self.sessions() as session:
+            count = await session.scalar(select(func.count()).select_from(Story))
+            self.assertEqual(count, 1)
+
+    async def test_app_passes_configured_attempt_limit_to_generation_service(self):
+        app = create_app(
+            self.config.model_copy(update={"STORY_GENERATION_MAX_ATTEMPTS": 3}),
+            database=self.database,
+        )
+        self.assertEqual(app.state.job_processor.generator.max_attempts, 3)
+
     async def test_safe_failures_are_exposed_but_unknown_errors_are_sanitized(self):
         for error, expected in (
             (
