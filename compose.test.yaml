@@ -1,0 +1,19 @@
+# Test-only override: no credentials or external model requests.
+services:
+  backend:
+    environment:
+      STORY_PROVIDER: deepseek
+      DEEPSEEK_API_KEY: test-only-key
+      DEEPSEEK_BASE_URL: http://provider:8001
+      DEEPSEEK_MODEL: fixture-model
+      GEMINI_API_KEY: ""
+    depends_on:
+      provider:
+        condition: service_started
+  provider:
+    image: python:3.14-slim
+    user: "10001:10001"
+    command: ["python", "-B", "/tests/mock_provider.py"]
+    volumes:
+      - ./scripts/mock_provider.py:/tests/mock_provider.py:ro
+      - ./backend/tests/fixtures/branching_story.json:/tests/story.json:ro
